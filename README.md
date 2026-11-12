@@ -2,7 +2,7 @@
 
 A Python CLI for unlocking the web interface on the Airtel AOT5221ZY router. It also checks connectivity, downloads and decrypts configuration backups, and manages LAN SSH access. Tested on firmware **AOT5221ZY_R_2.29**.
 
-![Airtel AOT5221ZY CLI showing successful web interface unlock](assets/aot5221zy-unlock-cli.png)
+![Airtel AOT5221ZY CLI showing successful web interface unlock](docs/screenshots/aot5221zy-unlock-cli.png)
 
 ## Run on Windows
 
@@ -79,11 +79,11 @@ The router's **LAN > Static DHCP** page shows **Add New Static Lease** and **App
 
 **LAN Setup**
 
-![Airtel AOT5221ZY LAN Setup](assets/router-lan-setup.png)
+![Airtel AOT5221ZY LAN Setup](docs/screenshots/router-lan-setup.png)
 
 **TR-069 Client**
 
-![Airtel AOT5221ZY TR-069 Client](assets/router-tr069-client.png)
+![Airtel AOT5221ZY TR-069 Client](docs/screenshots/router-tr069-client.png)
 
 ## License
 
