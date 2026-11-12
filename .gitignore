@@ -1,0 +1,13 @@
+.venv*/
+venv/
+**/__pycache__/
+*.py[cod]
+.ruff_cache/
+backups/
+/tests/
+/requirements-dev.txt
+*.cfg
+*.xml
+*.log
+.env
+.env.*

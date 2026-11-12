@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+START=99
+start() {
+    /etc/router-web-unlock/apply.sh
+}
+stop() {
+    # No shutdown mutation: disabling the service prevents future reapplication.
+    return 0
+}
+
+boot() {
+    # Vendor backend continues initialization after its init script returns.
+    ( sleep 120; /etc/router-web-unlock/apply.sh ) </dev/null >/dev/null 2>&1 &
+}
