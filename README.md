@@ -1,6 +1,6 @@
 # Airtel AOT5221ZY Router Unlock Tool
 
-A Python CLI for unlocking the web interface on the Airtel AOT5221ZY router. It also checks connectivity, downloads and decrypts configuration backups, and manages LAN SSH access. Tested on firmware **AOT5221ZY_R_2.29**.
+A Python CLI for unlocking the web interface on the Airtel AOT5221ZY router. It also checks connectivity, downloads and decrypts configuration backups, and manages LAN SSH access. Tested on firmware **AOT5221ZY_R_2.29** and **AOT5221ZY_R_2.26**.
 
 ![Airtel AOT5221ZY CLI showing successful web interface unlock](docs/screenshots/aot5221zy-unlock-cli.png)
 
@@ -95,7 +95,7 @@ Original project code is licensed under the [MIT License](LICENSE). Third-party 
 
 This tool changes settings on your router and can restore configuration backups. Use it at your own risk.
 
-- **Tested only on the Airtel AOT5221ZY** (firmware: `AOT5221ZY_R_2.29`). Other models or firmware versions may behave differently or not work at all.
+- **Tested only on the Airtel AOT5221ZY** (firmware: `AOT5221ZY_R_2.29` and `AOT5221ZY_R_2.26`). Other models or firmware versions may behave differently or not work at all.
 - A wrong or interrupted change can lock you out of the router's web interface or require a factory reset.
 - Take a backup first and keep the backup files private. They can contain router passwords.
 - This project is not affiliated with or endorsed by Airtel or the router's manufacturer. Check your ISP's terms before modifying the device.
