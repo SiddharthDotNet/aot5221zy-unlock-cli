@@ -74,8 +74,9 @@ class WebUnlock:
     def information(self):
         found = hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest()
         if found not in UTILITY_MD5S:
+            expected = ", ".join(UTILITY_MD5S)
             raise RuntimeError(
-                f"Unsupported vendor utility: /usr/bin/ccctest MD5 is {found}, expected one of {", ".join(UTILITY_MD5S)}. "
+                f"Unsupported vendor utility: /usr/bin/ccctest MD5 is {found}, expected one of {expected}. "
                 "This firmware differs from the verified one."
             )
         path = "/tmp/router-info-" + uuid.uuid4().hex + ".ccc"
