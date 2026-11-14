@@ -18,7 +18,8 @@ from .ssh_probe import probe_ssh
 from .ssh_trust import IdentityApprovalRequired, approve_identity
 from .web_unlock import WebUnlock
 
-FIRMWARE = "AOT5221ZY_R_2.29"
+# Verified firmware builds for the SSH-enable backup/restore recipe.
+FIRMWARES = ("AOT5221ZY_R_2.29", "AOT5221ZY_R_2.26")
 
 
 def record_result(session, title, state, message, next_step=""):
@@ -262,11 +263,12 @@ def run_action(command, host, user=None, output=None, prepare_only=False, sessio
                 "Keep these files private.",
             )
             return 0
-        if info.get("firmware") != FIRMWARE:
+        if info.get("firmware") not in FIRMWARES:
             raise RuntimeError(
-                f"SSH preparation is verified only for {FIRMWARE}. The original backup is in {folder.resolve()}."
+                f"SSH preparation is verified only for {', '.join(FIRMWARES)}. "
+                f"The original backup is in {folder.resolve()}."
             )
-        apply_lan_ssh(xml)
+        apply_lan_ssh(xml, user)
         edited = ET.tostring(xml, encoding="utf-8", xml_declaration=True)
         payload = encrypt_config_bytes(edited, FIRMWARE_KEY)
         (folder / "ssh-enabled.xml").write_bytes(edited)

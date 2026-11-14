@@ -14,7 +14,11 @@ ASSETS = APP_ASSETS / "web_unlock"
 BASE = "/etc/router-web-unlock"
 SERVICE = "/etc/init.d/zzzz_router_web_unlock"
 LINK = "/etc/rc.d/S99zzzz_router_web_unlock"
-UTILITY_MD5 = "9af374bfc32752227fc5e71baabdfd1d"
+# Verified ccctest builds: AOT5221ZY_R_2.29 and AOT5221ZY_R_2.26.
+UTILITY_MD5S = (
+    "9af374bfc32752227fc5e71baabdfd1d",
+    "bc888e8e64d1e5ab0b64ff8589b54fe8",
+)
 
 
 class WebUnlock:
@@ -68,8 +72,13 @@ class WebUnlock:
         self.client.close()
 
     def information(self):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
-            raise RuntimeError("Unsupported vendor utility")
+        found = hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest()
+        if found not in UTILITY_MD5S:
+            expected = ", ".join(UTILITY_MD5S)
+            raise RuntimeError(
+                f"Unsupported vendor utility: /usr/bin/ccctest MD5 is {found}, expected one of {expected}. "
+                "This firmware differs from the verified one."
+            )
         path = "/tmp/router-info-" + uuid.uuid4().hex + ".ccc"
         payload = (
             "RDMNAME config;\nREQUEST;\nSEL InternetGatewayDevice.DeviceInfo;\n"
@@ -114,14 +123,14 @@ class WebUnlock:
             raise RuntimeError("Could not verify uploaded file: " + path)
 
     def compatible(self):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
+        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() not in UTILITY_MD5S:
             raise RuntimeError(
                 "This firmware does not match the verified vendor utility. No changes applied."
             )
         self.log("Router utility version checked.")
 
     def flag(self, value=None):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
+        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() not in UTILITY_MD5S:
             raise RuntimeError("Unsupported router utility.")
         lines = ["RDMNAME config;", "REQUEST;", "SEL InternetGatewayDevice.DeviceInfo;"]
         if value is not None:
