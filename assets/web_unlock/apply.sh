@@ -9,6 +9,7 @@ hash() { md5sum "$1" | cut -d ' ' -f 1; }
 case "$(hash /usr/bin/ccctest)" in
     9af374bfc32752227fc5e71baabdfd1d) ;; # AOT5221ZY_R_2.29
     968461a70a2624e16e7d5bf5e725de3f) ;; # AOT5221ZY_R_2.17: verified
+    bc888e8e64d1e5ab0b64ff8589b54fe8) ;; # AOT5221ZY_R_2.26: verified
     *) exit 1 ;;
 esac
 cat > /tmp/router-startup-web.ccc <<'CCC'

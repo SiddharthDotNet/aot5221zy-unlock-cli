@@ -21,6 +21,7 @@ from .web_unlock import WebUnlock
 FIRMWARES = (
     "AOT5221ZY_R_2.29",
     "AOT5221ZY_R_2.17",
+    "AOT5221ZY_R_2.26",
 )
 
 
