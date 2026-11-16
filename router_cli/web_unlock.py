@@ -14,7 +14,10 @@ ASSETS = APP_ASSETS / "web_unlock"
 BASE = "/etc/router-web-unlock"
 SERVICE = "/etc/init.d/zzzz_router_web_unlock"
 LINK = "/etc/rc.d/S99zzzz_router_web_unlock"
-UTILITY_MD5 = "9af374bfc32752227fc5e71baabdfd1d"
+UTILITY_MD5S = (
+    "9af374bfc32752227fc5e71baabdfd1d",  # AOT5221ZY_R_2.29
+    "968461a70a2624e16e7d5bf5e725de3f",  # AOT5221ZY_R_2.17: verified
+)
 
 
 class WebUnlock:
@@ -68,8 +71,11 @@ class WebUnlock:
         self.client.close()
 
     def information(self):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
-            raise RuntimeError("Unsupported vendor utility")
+        actual_md5 = hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest()
+        if actual_md5 not in UTILITY_MD5S:
+            raise RuntimeError(
+                f"Unsupported vendor utility: found {actual_md5}; expected one of {', '.join(UTILITY_MD5S)}"
+            )
         path = "/tmp/router-info-" + uuid.uuid4().hex + ".ccc"
         payload = (
             "RDMNAME config;\nREQUEST;\nSEL InternetGatewayDevice.DeviceInfo;\n"
@@ -114,14 +120,14 @@ class WebUnlock:
             raise RuntimeError("Could not verify uploaded file: " + path)
 
     def compatible(self):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
+        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() not in UTILITY_MD5S:
             raise RuntimeError(
                 "This firmware does not match the verified vendor utility. No changes applied."
             )
         self.log("Router utility version checked.")
 
     def flag(self, value=None):
-        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() != UTILITY_MD5:
+        if hashlib.md5(self.read("/usr/bin/ccctest")).hexdigest() not in UTILITY_MD5S:
             raise RuntimeError("Unsupported router utility.")
         lines = ["RDMNAME config;", "REQUEST;", "SEL InternetGatewayDevice.DeviceInfo;"]
         if value is not None:
