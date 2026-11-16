@@ -1,8 +1,18 @@
 # Airtel AOT5221ZY Router Unlock Tool
 
-A Python CLI for unlocking the web interface on the Airtel AOT5221ZY router. It also checks connectivity, downloads and decrypts configuration backups, and manages LAN SSH access. Tested on firmware **AOT5221ZY_R_2.29**.
+A Python CLI for unlocking the web interface on the Airtel AOT5221ZY router. It also checks connectivity, downloads and decrypts configuration backups, and manages LAN SSH access. Supports firmware **AOT5221ZY_R_2.29**, **AOT5221ZY_R_2.17**, and **AOT5221ZY_R_2.26**.
 
 ![Airtel AOT5221ZY CLI showing successful web interface unlock](docs/screenshots/aot5221zy-unlock-cli.png)
+
+## Supported firmware
+
+| Firmware | Expected MD5 of `/usr/bin/ccctest` |
+| --- | --- |
+| `AOT5221ZY_R_2.29` | `9af374bfc32752227fc5e71baabdfd1d` |
+| `AOT5221ZY_R_2.17` | `968461a70a2624e16e7d5bf5e725de3f` |
+| `AOT5221ZY_R_2.26` | `bc888e8e64d1e5ab0b64ff8589b54fe8` |
+
+R_2.17 and R_2.26 were verified by the maintainer. Before sending commands to the vendor utility, the web unlock checks its MD5 against this allowlist. The startup script enforces the same check and exits for any other hash. SSH preparation through backup and restore accepts the three firmware versions listed above.
 
 ## Run on Windows
 
@@ -95,7 +105,7 @@ Original project code is licensed under the [MIT License](LICENSE). Third-party 
 
 This tool changes settings on your router and can restore configuration backups. Use it at your own risk.
 
-- **Tested only on the Airtel AOT5221ZY** (firmware: `AOT5221ZY_R_2.29`). Other models or firmware versions may behave differently or not work at all.
+- **Supported only on the Airtel AOT5221ZY**, with firmware `AOT5221ZY_R_2.29`, `AOT5221ZY_R_2.17`, or `AOT5221ZY_R_2.26`. Other models or firmware versions may behave differently or not work at all.
 - A wrong or interrupted change can lock you out of the router's web interface or require a factory reset.
 - Take a backup first and keep the backup files private. They can contain router passwords.
 - This project is not affiliated with or endorsed by Airtel or the router's manufacturer. Check your ISP's terms before modifying the device.
